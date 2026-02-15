@@ -93,4 +93,4 @@ async def clear(ctx, amount: int):
     await ctx.send(f"🧹 Supprimé {amount} messages !", delete_after=5)
 
 # --- LANCEMENT ---
-bot.run("MTQ3MjcwNzUxMjAwNzY1NTQ2Mw.Gq4PUo.-o4ePiIrLHHzNfckZF0iJinamzAjLgg7p3-yWY")
+bot.run("MTQ3MjcwNzUxMjAwNzY1NTQ2Mw.GObNhD.rmdvtbP0mIogJB7Pv1xr5HlTnOQWgB1NDJbk_Q")
