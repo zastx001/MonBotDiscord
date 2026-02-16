@@ -2,6 +2,19 @@
 import os
 import certifi
 import ssl
+import http.server
+import socketserver
+import threading
+import os
+
+def run_server():
+    port = int(os.environ.get("PORT", 8080))
+    handler = http.server.SimpleHTTPRequestHandler
+    with socketserver.TCPServer(("", port), handler) as httpd:
+        httpd.serve_forever()
+
+threading.Thread(target=run_server, daemon=True).start()
+
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
