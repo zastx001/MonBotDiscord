@@ -2,11 +2,14 @@
 import os
 import certifi
 import ssl
+import random
+import discord
+from discord.ext import commands
 import http.server
 import socketserver
 import threading
-import os
 
+# --- CONFIGURATION SERVEUR POUR RENDER (GRATUIT) ---
 def run_server():
     port = int(os.environ.get("PORT", 8080))
     handler = http.server.SimpleHTTPRequestHandler
@@ -15,14 +18,15 @@ def run_server():
 
 threading.Thread(target=run_server, daemon=True).start()
 
-
+# --- CONFIGURATION SSL ---
 ssl._create_default_https_context = ssl._create_unverified_context
-
-# On configure le certificat AVANT toute chose
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
-import random
-import discord
+# --- CRÉATION DU BOT ---
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix="!", intents=intents)
+
 from discord.ext import commands
 
 
