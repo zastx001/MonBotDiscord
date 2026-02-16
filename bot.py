@@ -1,3 +1,4 @@
+
 import os
 import certifi
 import ssl
@@ -93,4 +94,6 @@ async def clear(ctx, amount: int):
     await ctx.send(f"🧹 Supprimé {amount} messages !", delete_after=5)
 
 # --- LANCEMENT ---
-bot.run("MTQ3MjcwNzUxMjAwNzY1NTQ2Mw.GObNhD.rmdvtbP0mIogJB7Pv1xr5HlTnOQWgB1NDJbk_Q")
+
+bot.run(os.getenv("DISCORD_TOKEN"))
+
