@@ -1,36 +1,30 @@
 import os
 import discord
 from discord.ext import commands
-import random
 import threading
 import http.server
 import socketserver
 
-# --- 1. LE SERVEUR POUR QUE RENDER NE FAILLE PAS ---
+# --- SERVEUR DE MAINTIEN (RENDER) ---
 def run_server():
     port = int(os.environ.get("PORT", 8080))
-    with socketserver.TCPServer(("", port), http.server.SimpleHTTPRequestHandler) as httpd:
+    handler = http.server.SimpleHTTPRequestHandler
+    with socketserver.TCPServer(("", port), handler) as httpd:
         httpd.serve_forever()
-
 threading.Thread(target=run_server, daemon=True).start()
 
-# --- 2. CONFIG DU BOT (Comme sur tes photos) ---
+# --- CONFIG BOT ---
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
-    print(f'✅ ZASTX EST EN LIGNE !')
+    print(f'✅ EN LIGNE : {bot.user.name}')
 
 @bot.command()
 async def ping(ctx):
     await ctx.send('Pong ! 🏓')
 
-@bot.command(name="8ball")
-async def eight_ball(ctx, *, question):
-    reponses = ["Oui", "Non", "Peut-être", "C'est certain !", "Jamais."]
-    await ctx.send(f"🎱 {random.choice(reponses)}")
-
-# --- 3. LANCEMENT ---
+# --- LANCEMENT ---
 token = os.environ.get("DISCORD_TOKEN")
 bot.run(token)
