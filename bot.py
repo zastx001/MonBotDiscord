@@ -1,15 +1,21 @@
-import os, discord, random, threading, http.server, socketserver
+import os
+import discord
 from discord.ext import commands
+import random
+import threading
+import http.server
+import socketserver
 
-# --- SERVEUR ANTI-DODO ---
+# --- 1. LE SERVEUR POUR QUE RENDER NE FAILLE PAS ---
 def run_server():
     port = int(os.environ.get("PORT", 8080))
     with socketserver.TCPServer(("", port), http.server.SimpleHTTPRequestHandler) as httpd:
         httpd.serve_forever()
+
 threading.Thread(target=run_server, daemon=True).start()
 
-# --- BOT CONFIG ---
-intents = discord.Intents.all() # On met TOUT pour être tranquille
+# --- 2. CONFIG DU BOT (Comme sur tes photos) ---
+intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
@@ -25,6 +31,6 @@ async def eight_ball(ctx, *, question):
     reponses = ["Oui", "Non", "Peut-être", "C'est certain !", "Jamais."]
     await ctx.send(f"🎱 {random.choice(reponses)}")
 
-# --- LANCEMENT (LA LIGNE CRITIQUE) ---
+# --- 3. LANCEMENT ---
 token = os.environ.get("DISCORD_TOKEN")
 bot.run(token)
